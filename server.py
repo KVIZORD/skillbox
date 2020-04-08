@@ -23,10 +23,10 @@ class ServerProtocol(asyncio.Protocol):
         else:
             if decoded.startswith('login:'):
                 login = decoded.replace('login:', '').replace("/r/n", "").replace(' ', '')
-                if login not in login_list:
+                if login.lower() not in login_list:
                     self.login = login
                     self.transport.write('Успешная регистрация\r\n'.encode())
-                    login_list.append(self.login)
+                    login_list.append(self.login.lower())
                     self.send_history()
                 else:
                     self.transport.write('Логин уже существует! Выберите другой\r\n'.encode())
