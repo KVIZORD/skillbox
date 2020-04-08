@@ -32,7 +32,7 @@ class ServerProtocol(asyncio.Protocol):
                     self.send_history()
                     print(f'({get_time()}) User {self.login} register')
                 else:
-                    self.transport.write('Логин уже существует! Выберите другой\r\n'.encode())
+                    self.transport.write(f'Логин {login} уже существует! Выберите другой\r\n'.encode())
             else:
                 self.transport.write('Вы не авторизованы, напишите "login:"\r\n'.encode())
 
@@ -59,6 +59,7 @@ class ServerProtocol(asyncio.Protocol):
 
     def connection_lost(self, exception):
         self.server.clients.remove(self)
+        self.server.login_list.remove(self.login)
         print(f'({get_time()}) User {self.login} disconnection')
 
 
