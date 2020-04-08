@@ -59,7 +59,6 @@ class ServerProtocol(asyncio.Protocol):
 
     def connection_lost(self, exception):
         self.server.clients.remove(self)
-        self.server.login_list.remove(self.login)
         print(f'({get_time()}) User {self.login} disconnection')
 
 
